@@ -10,11 +10,7 @@ sensor.VGA: 640x480
 '''
 find_step=10                                            #寻找中心的步长，越小越精确，但是速度越慢
 #----------------------------------------------------------------------------------------------------------------------
-camera_picture_angle_halfwidth=50                       #相机视场角,半宽度参数
-camera_picture_angle_far=81                             #相机视场角,距离参数
-prefix_elements = [0x43,0x4B]                           #帧头
-suffix_elements = [0x59,0x46]                           #帧尾
-lens_corr_threshold=2.0
+
 import sensor
 import math
 import sensor,pyb
@@ -111,13 +107,18 @@ def center_find_by_circle(img):
         center_y+=circle.y()
     center_x/=len(circles)
     center_y/=len(circles)
+    img.draw_circle(center_x,center_y,5,color=(255,0,0))
     return center_x,center_y
 
 mode=0
 while(True):
     if mode==0:
         while(mode==0):
+            img=sensor.snapshot()
+            center_find_by_circle(img)
             pyb.delay(100)
     if mode==3:
         while(mode==3):
+            img=sensor.snapshot()
+            center_find_by_lmy(img)
             pyb.delay(100)
