@@ -93,6 +93,26 @@ def center_find_by_lmy(img):
     for y in range(img.height(),step=find_step):
         x=0
         if img.get_pixel(x,y)==255:
+            temp_x=x
+            while(img.get_pixel(x,y)==255 and x<img.width()-1):
+                temp_x+=0.5
+                x+=1
+        center_x+=temp_x/2
+        x+=1
+    img.draw_circle(center_x,center_y,5,color=(255,0,0))
+    return center_x,center_y
+
+def center_find_by_circle(img):
+    img.erode(1)
+    img.dilate(1)
+    circles=img.find_circles(r_min=10)
+    for circle in circles:
+        center_x+=circle.x()
+        center_y+=circle.y()
+    center_x/=len(circles)
+    center_y/=len(circles)
+    return center_x,center_y
+
 mode=0
 while(True):
     if mode==0:
