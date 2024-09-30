@@ -8,7 +8,7 @@ sensor.QQVGA: 160x120
 sensor.QVGA: 320x240
 sensor.VGA: 640x480
 '''
-find_step=10                                            #寻找中心的步长，越小越精确，但是速度越慢
+find_step=5                                            #寻找中心的步长，越小越精确，但是速度越慢
 #----------------------------------------------------------------------------------------------------------------------
 
 import sensor
@@ -17,7 +17,6 @@ import sensor,pyb
 from pyb import Pin, Timer
 
 uart = pyb.UART(3, 115200, timeout_char = 1000)
-thresholds = (box_threshold,cross_threshold)
 data=[0]*10
 sensor.reset()
 sensor.set_framesize(sensor.VGA)
@@ -63,7 +62,7 @@ def int_to_uint8_t_array_via_bit_ops(n):
     for i in range(2):
            byte = (n >> (i * 8)) & 0xFF  # 提取第i个字节
            uint8_array.append(byte)
-       
+
        # 返回结果数组
     return uint8_array
 
@@ -72,50 +71,62 @@ def radians(degrees):
     return math.pi * degrees / 180.0
 
 def center_find_by_lmy(img):
-    img.binary([(0,0,0),(255,255,255)], invert=True)
+    img.binary([(51, 100, -10, 10, -10, 10)])
     img.erode(1)
     img.dilate(1)
+    center_y=0
+    center_x=0
     #垂直方向查找
-    for x in range(img.width(),step=find_step):
-        y=0
-        if img.get_pixel(x,y)==255:
+    for x in range(0,img.width(),find_step):
+        y=1
+        if img.get_pixel(x,y)==(0,0,0):
             temp_y=y
-            while(img.get_pixel(x,y)==255 and y<img.height()-1):
+            while(img.get_pixel(x,y)==(0,0,0) and y<img.height()-1):
+                img.draw_circle(x,y,2,color=(0,255,0))
                 temp_y+=0.5
                 y+=1
-        center_y+=temp_y/2
+                print(y)
+            center_y+=temp_y/2
         y+=1
     #水平方向查找
-    for y in range(img.height(),step=find_step):
-        x=0
-        if img.get_pixel(x,y)==255:
-            temp_x=x
-            while(img.get_pixel(x,y)==255 and x<img.width()-1):
-                temp_x+=0.5
-                x+=1
-        center_x+=temp_x/2
-        x+=1
-    img.draw_circle(center_x,center_y,5,color=(255,0,0))
-    return center_x,center_y
+    # for y in range(0,img.height(),find_step):
+    #     x=0
+    #     if img.get_pixel(x,y)==(0,0,0):
+
+    #         temp_x=x
+    #         while(img.get_pixel(x,y)==(0,0,0) and x<img.width()-1):
+    #             img.draw_circle(x,y,2,color=(0,255,0))
+    #             temp_x+=0.5
+    #             x+=1
+    #         center_x+=temp_x/2
+    #     x+=1
+    img.draw_circle(int(center_x),int(center_y),5,color=(255,0,0))
+    return 0,0#center_x,center_y
 
 def center_find_by_circle(img):
-    img.erode(1)
-    img.dilate(1)
-    circles=img.find_circles(r_min=10)
-    for circle in circles:
-        center_x+=circle.x()
-        center_y+=circle.y()
-    center_x/=len(circles)
-    center_y/=len(circles)
-    img.draw_circle(center_x,center_y,5,color=(255,0,0))
+    #img.erode(1)
+    #img.dilate(1)
+    circles=img.find_circles(r_min=100)
+    center_x=0
+    center_y=0
+    if circles:
+        for circle in circles:
+            center_x+=circle.x()
+            center_y+=circle.y()
+            img.draw_circle(circle.x(),circle.y(),circle.r())
+            print(circle.r())
+        center_x/=len(circles)
+        center_y/=len(circles)
+        img.draw_circle(int(center_x),int(center_y),2,color=(255,0,0))
     return center_x,center_y
 
-mode=0
+mode=3
 while(True):
     if mode==0:
         while(mode==0):
             img=sensor.snapshot()
             center_find_by_circle(img)
+            print("sadfsfda")
             pyb.delay(100)
     if mode==3:
         while(mode==3):
