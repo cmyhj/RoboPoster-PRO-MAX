@@ -9,6 +9,9 @@ sensor.QVGA: 320x240
 sensor.VGA: 640x480
 '''
 find_step=1                                           #寻找中心的步长，越小越精确，但是速度越慢
+green_threshold=(0, 100, -128, 127, -128, 127)      #绿色阈值
+blue_threshold=(0, 100, -128, 127, -128, 127)       #蓝色阈值
+red_threshold=(100, 127, -84, -2, -128, 0)        #红色阈值
 #----------------------------------------------------------------------------------------------------------------------
 
 import sensor
@@ -21,7 +24,7 @@ uart = pyb.UART(3, 115200, timeout_char = 1000)
 data=[0]*10
 sensor.reset()
 sensor.set_framesize(sensor.QVGA)
-sensor.set_pixformat(sensor.GRAYSCALE)
+sensor.set_pixformat(sensor.RGB565)
 #sensor.set_auto_gain(False)  # must be turned off for color tracking
 #sensor.set_auto_whitebal(False)  # must be turned off for color tracking
 #sensor.set_auto_blc(False)
@@ -114,13 +117,49 @@ def center_find_by_circle(img):
 mode=3
 while(True):
     if mode==0:
-        while(mode==0):
+        while(mode==0): #定位
             img=sensor.snapshot()
-            center_find_by_circle(img)
-            print("sadfsfda")
-            pyb.delay(100)
-    if mode==3:
+            UartSendDate(center_find_by_circle(img))
+            UartReceiveDate()
+    if mode==1:  #巡线
+        while(mode==1):
+            img=sensor.snapshot()
+            img.find_edges(image.EDGE_CANNY, threshold=(50, 80))
+            lines=img.find_lines(threshold=100, theta_margin=15, rho_margin=10)
+            for line in lines:
+                img.draw_line(line.line(),color=(255,0,0))
+            UartSendDate(lines)
+            UartReceiveDate()
+    if mode==3: #颜色
         while(mode==3):
             img=sensor.snapshot()
-            center_find_by_lmy(img)
+            green_blobs = img.find_blobs([green_threshold])
+            blue_blobs = img.find_blobs([blue_threshold])
+            red_blobs = img.find_blobs([red_threshold])
+            green_max=0
+            blue_max=0
+            red_max=0
+            green_center_x=0
+            green_center_y=0
+            blue_center_x=0
+            blue_center_y=0
+            red_center_x=0
+            red_center_y=0
+            for blob in green_blobs:
+                if blob.area() > green_max:
+                    green_max = blob.area()
+                    green_center_x = blob.cx()
+                    green_center_y = blob.cy()
+            for blob in blue_blobs:
+                if blob.area() > blue_max:
+                    blue_max = blob.area()
+                    blue_center_x = blob.cx()
+                    blue_center_y = blob.cy()
+            for blob in red_blobs:
+                if blob.area() > red_max:
+                    red_max = blob.area()
+                    red_center_x = blob.cx()
+                    red_center_y = blob.cy()
+            UartSendDate(green_center_x,green_center_y,blue_center_x,blue_center_y,red_center_x,red_center_y)
+            UartReceiveDate()
             pyb.delay(100)
