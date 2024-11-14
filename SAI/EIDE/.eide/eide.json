@@ -44,18 +44,44 @@
                   },
                   {
                     "path": "../Core/Src/stm32f4xx_hal_msp.c"
+                  },
+                  {
+                    "path": "../Core/Src/system_stm32f4xx.c"
                   }
                 ],
                 "folders": []
               },
               {
                 "name": "TaskAndQueue",
-                "files": [],
+                "files": [
+                  {
+                    "path": "../Core/TaskAndQueue/ChassisPIDCalculate.c"
+                  },
+                  {
+                    "path": "../Core/TaskAndQueue/ConnectTask.c"
+                  },
+                  {
+                    "path": "../Core/TaskAndQueue/DebugTask.c"
+                  },
+                  {
+                    "path": "../Core/TaskAndQueue/ScrewPIDCalculate.c"
+                  },
+                  {
+                    "path": "../Core/TaskAndQueue/StartTask.c"
+                  }
+                ],
                 "folders": []
               },
               {
                 "name": "ChassisMovement",
-                "files": [],
+                "files": [
+                  {
+                    "path": "../Core/ChassisMovement/ChassisFunction.c"
+                  },
+                  {
+                    "path": "../Core/ChassisMovement/chassis_behaviour.c"
+                  }
+                ],
                 "folders": []
               },
               {
@@ -64,13 +90,57 @@
                 "folders": []
               },
               {
-                "name": "GlobalVariable",
-                "files": [],
-                "folders": []
+                "name": "Global",
+                "files": [
+                  {
+                    "path": "../Core/GlobalVariable/AllInclude.h"
+                  }
+                ],
+                "folders": [
+                  {
+                    "name": "Public",
+                    "files": [
+                      {
+                        "path": "../Core/GlobalVariable/PublicVariable.c"
+                      },
+                      {
+                        "path": "../Core/GlobalVariable/PublicVariable.h"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "Chassis",
+                    "files": [
+                      {
+                        "path": "../Core/GlobalVariable/ChassisVariable.c"
+                      },
+                      {
+                        "path": "../Core/GlobalVariable/ChassisVariable.h"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
               },
               {
                 "name": "ArmMovement",
                 "files": [],
+                "folders": []
+              },
+              {
+                "name": "bsp",
+                "files": [
+                  {
+                    "path": "../Core/bsp/bsp_can.c"
+                  },
+                  {
+                    "path": "../Core/bsp/PID.c"
+                  },
+                  {
+                    "path": "../Core/bsp/Motor.c"
+                  }
+                ],
                 "folders": []
               }
             ]
@@ -343,7 +413,8 @@
           "../Drivers/CMSIS/Device/ST/STM32F4xx/Include",
           "../Drivers/CMSIS/Include",
           ".cmsis/include",
-          "../MDK-ARM/RTE/_SAI"
+          "../MDK-ARM/RTE/_SAI",
+          "../Core/GlobalVariable"
         ],
         "libList": [],
         "defineList": [
