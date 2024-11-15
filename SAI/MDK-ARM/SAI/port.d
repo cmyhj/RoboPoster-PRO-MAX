@@ -1,0 +1,12 @@
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+sai\port.o: F:\Software\KEIL5\Core\ARM\Arm_Compiler_5.06u7\Bin\..\include\stddef.h
+sai\port.o: F:\Software\KEIL5\Core\ARM\Arm_Compiler_5.06u7\Bin\..\include\stdint.h
+sai\port.o: ../Core/Inc/FreeRTOSConfig.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+sai\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
