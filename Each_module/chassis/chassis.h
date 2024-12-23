@@ -3,65 +3,6 @@
 
 #include "Variable.h"
 
-////单位(cm)
-//#define WHEEL_DISTANCE_TO_CENTER_X 8.0f
-//#define WHEEL_DISTANCE_TO_CENTER_Y 12.648f
-//#define WHEEL_RADIUS 5.0f
-
-
-//#define NORMAL_MAX_CHASSIS_SPEED_X 1.0f
-//#define NORMAL_MAX_CHASSIS_SPEED_Y 1.0f
-//#define NORMAL_MAX_CHASSIS_SPEED_Z 2.0f
-
-
-////m2006转速转化成底盘速度(m/s)的比例，
-//#define M2006_MOTOR_RPM_TO_VECTOR (2*3.1415926f*WHEEL_RADIUS/100/60/36)
-
-
-//#define MOTOR_SPEED_TO_CHASSIS_SPEED_VX 0.25f
-//#define MOTOR_SPEED_TO_CHASSIS_SPEED_VY 0.25f
-//#define MOTOR_SPEED_TO_CHASSIS_SPEED_WZ 0.25f
-
-//#define MOTOR_DISTANCE_TO_CENTER 0.2f
-
-
-////单个底盘电机最大速度
-//#define MAX_WHEEL_SPEED 1.0f
-
-//#define CHASSIS_PID_MAX_OUT 8000.0f
-//#define CHASSIS_PID_MAX_IOUT 3000.0f
-
-///*
-//速度PID参数
-//*/
-//#define M2006_MOTOR_SPEED_PID_KP 18000.0f
-//#define M2006_MOTOR_SPEED_PID_KI 200.0f
-//#define M2006_MOTOR_SPEED_PID_KD 2300.0f
-//#define M2006_MOTOR_SPEED_PID_MAX_OUT MAX_MOTOR_CAN_CURRENT
-//#define M2006_MOTOR_SPEED_PID_MAX_IOUT 2000.0f
-
-///*
-// 距离PID参数
-//*/
-//#define M2006_MOTOR_DISTANCE_PID_KP 2.4f
-//#define M2006_MOTOR_DISTANCE_PID_KI 0.000004f
-//#define M2006_MOTOR_DISTANCE_PID_KD 0.0000012f
-//#define M2006_MOTOR_DISTANCE_PID_MAX_OUT 1000.0f
-//#define M2006_MOTOR_DISTANCE_PID_MAX_IOUT 0.8f
-
-////m2006转子里程转化成坐标轴路程的比例（m)
-//#define M2006_MOTOR_ECD_TO_DISTANCE (2*3.1415926f*WHEEL_RADIUS/8192/36/100)
-//#define CHASSIS_WZ_SET_SCALE ((WHEEL_DISTANCE_TO_CENTER_X+WHEEL_DISTANCE_TO_CENTER_Y)/100)
-
-///*
-//缓起参数
-//*/
-//#define SLOWSTART_VX_K 0.010f
-//#define SLOWSTART_VY_K 0.008f
-//#define SLOWSTART_WZ_K 0.0004f
-//#define SLOWSTART_MINDIS_V 0.15f
-//#define SLOWSTART_MINDIS_W 0.02f
-
 void Chassis_Task(void const * argument);
 void PID_Task(void const * argument);
 

@@ -31,6 +31,7 @@ c_c_gcs\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 c_c_gcs\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 c_c_gcs\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 c_c_gcs\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+c_c_gcs\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 c_c_gcs\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 c_c_gcs\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 c_c_gcs\main.o: ../Core/Inc/FreeRTOSConfig.h
@@ -47,6 +48,7 @@ c_c_gcs\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 c_c_gcs\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 c_c_gcs\main.o: ../Core/Inc/can.h
 c_c_gcs\main.o: ../Core/Inc/tim.h
+c_c_gcs\main.o: ../Core/Inc/usart.h
 c_c_gcs\main.o: ../Core/Inc/gpio.h
 c_c_gcs\main.o: ../Bsp/Variable.h
 c_c_gcs\main.o: ../chassis/chassis.h

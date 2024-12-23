@@ -40,17 +40,17 @@ float pid_calc(pid_struct_t *pid, float ref, float fdb)
 void PID_init()
 {
 	pid_init(&M6020_yaw_speed_pid, 300, 1, 2, 30000, 30000);
-	pid_init(&M6020_yaw_angle_pid, 0.5, 0, 0, 30, 100);
+	pid_init(&M6020_yaw_angle_pid, 0.5, 0, 0, 300, 8000);
 	
-	pid_init(&M2006_speed_pid[0], 1, 0, 0, 30000, 30000);
-	pid_init(&M2006_angle_pid[0], 1, 0, 0, 30, 100);
-	pid_init(&M2006_speed_pid[1], 1, 0, 0, 30000, 30000);
-	pid_init(&M2006_angle_pid[1], 1, 0, 0, 30, 100);
-	pid_init(&M2006_speed_pid[2], 1, 0, 0, 30000, 30000);
-	pid_init(&M2006_angle_pid[2], 1, 0, 0, 30, 100);
-	pid_init(&M2006_speed_pid[3], 1, 0, 0, 30000, 30000);
-	pid_init(&M2006_angle_pid[3], 1, 0, 0, 30, 100);
+	pid_init(&M2006_speed_pid[0], 1, 0, 0, 10000, 10000);
+	pid_init(&M2006_angle_pid[0], 1, 0, 0, 300, 8000);
+	pid_init(&M2006_speed_pid[1], 1, 0, 0, 10000, 10000);
+	pid_init(&M2006_angle_pid[1], 1, 0, 0, 300, 8000);
+	pid_init(&M2006_speed_pid[2], 1, 0, 0, 10000, 10000);
+	pid_init(&M2006_angle_pid[2], 1, 0, 0, 300, 8000);
+	pid_init(&M2006_speed_pid[3], 1, 0, 0, 10000, 10000);
+	pid_init(&M2006_angle_pid[3], 1, 0, 0, 300, 8000);
 	
-	pid_init(&M2006_speed_pid[4], 1, 0, 0, 30000, 30000);
-	pid_init(&M2006_angle_pid[4], 1, 0, 0, 30, 100);
+	pid_init(&M2006_speed_pid[4], 1, 0, 0, 10000, 10000);
+	pid_init(&M2006_angle_pid[4], 1, 0, 0, 300, 8000);
 }

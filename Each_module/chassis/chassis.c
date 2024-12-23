@@ -2,6 +2,15 @@
 
 extern int16_t V_yaw;
 extern int16_t V_r;
+extern int16_t V_x;
+extern int16_t V_y;
+extern int16_t flag[4];
+extern int16_t v[6];
+extern int16_t t1;
+extern int16_t t_screen;
+extern moto_info_t motor_yaw_info;
+extern Motor_measure_t Motor_measure[5];
+extern uint8_t Transmit_USART6[3];
 
 void Chassis_Task(void const * argument)
 {
@@ -9,8 +18,8 @@ void Chassis_Task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	CAN_cmd_chassis(Motor_measure_2006[0].Output,Motor_measure_2006[1].Output,Motor_measure_2006[2].Output,Motor_measure_2006[3].Output);
-	CAN_cmd_gimbal(Motor_measure_6020.set_voltage,Motor_measure_2006[4].Output,0, 0);
+	CAN_cmd_chassis(v[0]*flag[0],v[1]*flag[1],v[2]*flag[2],v[3]*flag[3]);
+	CAN_cmd_gimbal(v[5],v[4],0,0);
 	Servo_Set();
     osDelay(1);
   }
@@ -19,12 +28,33 @@ void Chassis_Task(void const * argument)
 
 void PID_Task(void const * argument)
 {
-	for(int i = 0;i++;i<5)
+	while(1)
 	{
-		Motor_measure_2006[i].Output=pid_calc(&M2006_speed_pid[i],pid_calc(&M2006_angle_pid[i],A_r,Motor_measure_2006[i].total_ecd),Motor_measure_2006[i].speed_rpm);
-    }
-	Motor_measure_6020.set_voltage=pid_calc(&M6020_yaw_speed_pid, pid_calc(&M6020_yaw_angle_pid, A_yaw*22.7528, Motor_measure_6020.rotor_angle), Motor_measure_6020.rotor_speed);
-	osDelay(40);
+		if(t1)
+		{
+			for(int i=0;i<=3;i++)
+			{
+				v[i]=pid_calc(&M2006_speed_pid[i],pid_calc(&M2006_angle_pid[i],a[i],Motor_measure[i].total_ecd),Motor_measure[i].speed_rpm);
+			}
+			v[5]=pid_calc(&M6020_yaw_speed_pid,pid_calc(&M6020_yaw_angle_pid,a[i],motor_yaw_info.rotor_angle),motor_yaw_info.rotor_speed);
+			osDelay(2);
+		}
+	}
+}
+
+void Transmit_Task(void const * argument)
+{
+  /* USER CODE BEGIN Transmit_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+	if(t_screen)
+	{
+		HAL_UART_Transmit(&huart6,Transmit_USART6,4,1000);
+	}
+    osDelay(1);
+  }
+  /* USER CODE END Transmit_Task */
 }
 
 

@@ -40,6 +40,7 @@ c_c_gcs\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 c_c_gcs\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 c_c_gcs\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 c_c_gcs\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+c_c_gcs\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 c_c_gcs\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 c_c_gcs\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 c_c_gcs\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
@@ -48,10 +49,12 @@ c_c_gcs\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_gro
 c_c_gcs\freertos.o: ../Bsp/Variable.h
 c_c_gcs\freertos.o: ../chassis/chassis.h
 c_c_gcs\freertos.o: ../Bsp/Variable.h
+c_c_gcs\freertos.o: ../Core/Inc/usart.h
 c_c_gcs\freertos.o: ../Core/Inc/tim.h
 c_c_gcs\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+c_c_gcs\freertos.o: ../Core/Inc/can.h
+c_c_gcs\freertos.o: ../Core/Inc/gpio.h
 c_c_gcs\freertos.o: ../Bsp/bsp_can.h
 c_c_gcs\freertos.o: ../Bsp/pid.h
 c_c_gcs\freertos.o: ../Bsp/Servo.h
 c_c_gcs\freertos.o: ../Tesk/Tesk.h
-c_c_gcs\freertos.o: ../Core/Inc/can.h

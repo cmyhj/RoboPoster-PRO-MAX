@@ -21,6 +21,7 @@
 #include "cmsis_os.h"
 #include "can.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -92,6 +93,9 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   MX_TIM1_Init();
+  MX_CAN2_Init();
+  MX_USART1_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOH,GPIO_PIN_11,GPIO_PIN_SET);
   can_filter_init();   
@@ -99,6 +103,7 @@ int main(void)
   Servo_Init();  
   Un_Claw;
   Un_Sink;
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);  //receive interrupt
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
@@ -167,6 +172,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 

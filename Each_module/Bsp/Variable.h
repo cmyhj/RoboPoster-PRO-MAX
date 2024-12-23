@@ -2,18 +2,19 @@
 #define _Variable_H
 
 #include "chassis.h"
+#include "usart.h"
 #include "FreeRTOS.h"
 #include "main.h"
 #include "tim.h"
 #include "cmsis_os.h"
+#include "can.h"
+#include "gpio.h"
 #include "bsp_can.h" 
 #include "pid.h"
 #include "Servo.h"
 #include "stdint.h"
 #include "Tesk.h"
 #include "stdint.h"
-#include "can.h"
-
 
 extern int16_t v[6];
 extern int16_t a[6];
@@ -26,19 +27,27 @@ extern int16_t V_r;
 extern int16_t A_yaw;
 extern int16_t A_r;
 extern uint8_t rx_data[8];
-
-extern Motor_measure_t Motor_measure_2006[5];
-extern Motor_measure_y Motor_measure_6020;
-
+extern uint16_t can_flag1[4];
+extern moto_info_t motor_yaw_info;
+extern Motor_measure_t Motor_measure[5];
 extern pid_struct_t M6020_yaw_speed_pid;
 extern pid_struct_t M6020_yaw_angle_pid;
 extern pid_struct_t M2006_speed_pid[5];
 extern pid_struct_t M2006_angle_pid[5];
+extern uint8_t bil[6];
+extern int16_t V_x;
+extern int16_t V_y;
+extern int16_t t1;
+extern int16_t t123;
+extern uint8_t receive_USART1[4];
+extern uint8_t Transmit_USART6[3];
+extern int16_t t_screen;
+
 
 extern CAN_TxHeaderTypeDef CANx_tx_message;
 
-#define 	Claw 			Angle2=70
-#define 	Un_Claw 		Angle2=-60
+#define 	Claw 			Angle2=200
+#define 	Un_Claw 		Angle2=140
 #define 	Sink_plate 		Angle1=-50
 #define 	Sink_ground 	Angle1=60
 #define 	Un_Sink 		Angle1=-160

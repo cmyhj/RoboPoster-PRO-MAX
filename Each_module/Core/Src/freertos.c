@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Variable.h"
+extern uint8_t receive_USART1[4];
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +52,7 @@ osThreadId defaultTaskHandle;
 osThreadId TestHandle;
 osThreadId chassicHandle;
 osThreadId pidHandle;
+osThreadId transmitHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -61,6 +63,7 @@ void StartDefaultTask(void const * argument);
 void Test_Task(void const * argument);
 void Chassis_Task(void const * argument);
 void PID_Task(void const * argument);
+void Transmit_Task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -122,6 +125,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of pid */
   osThreadDef(pid, PID_Task, osPriorityNormal, 0, 128);
   pidHandle = osThreadCreate(osThread(pid), NULL);
+
+  /* definition and creation of transmit */
+  osThreadDef(transmit, Transmit_Task, osPriorityNormal, 0, 256);
+  transmitHandle = osThreadCreate(osThread(transmit), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -202,6 +209,24 @@ __weak void PID_Task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END PID_Task */
+}
+
+/* USER CODE BEGIN Header_Transmit_Task */
+/**
+* @brief Function implementing the transmit thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Transmit_Task */
+__weak void Transmit_Task(void const * argument)
+{
+  /* USER CODE BEGIN Transmit_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Transmit_Task */
 }
 
 /* Private application code --------------------------------------------------*/
