@@ -5,10 +5,10 @@
 #需要调试的参数---------------------------------------------------------------------------------------------------------
 '''
 sensor.QQVGA: 160x120
-sensor.QVGA: 320x240
+sensor.QVGA: 160x120
 sensor.VGA: 640x480
 '''
-find_step=1                                           #寻找中心的步长，越小越精确，但是速度越慢
+circle_radius=50
 green_threshold=(15, 80, -50, -14, -10, 30)      #绿色阈值
 blue_threshold=(15, 80, 3, 50, -80, -40)       #蓝色阈值
 red_threshold=(15, 80, 30, 60, -20, 50)        #红色阈值
@@ -30,9 +30,12 @@ last_5_center_y=[]
 last_5_radius=[]
 send_center_x=0
 send_center_y=0
-send_radius=0
+send_radius=0        
+blob_x=0
+blob_y=0
+blob_color=0
 cnt=0
-find_lines_roi=[0,0,320,200]
+find_lines_roi=[0,0,160,200]
 sensor.reset()
 sensor.set_framesize(sensor.QVGA)
 sensor.set_pixformat(sensor.RGB565)
@@ -97,7 +100,7 @@ def center_find_by_circle(img):
     #img.erode(1)
     #img.dilate(1)
     #img.gaussian(1)
-    circles=img.find_circles(threshold=3000, r_min=40,r_max=42)
+    circles=img.find_circles(threshold=3000, r_min=circle_radius, r_max=circle_radius+2)
     circle_max_magnitude=0
     center_x=0
     center_y=0
@@ -128,65 +131,95 @@ def center_find_by_circle(img):
         last_center_x=center_x
         last_center_y=center_y
 
+def distance_from_center(x1,y1):
+    return abs(x1-160)+abs(y1-120)
+def find_color(img):
+    global blob_x,blob_y,blob_color
+    green_blobs = img.find_blobs([green_threshold])
+    blue_blobs = img.find_blobs([blue_threshold])
+    red_blobs = img.find_blobs([red_threshold])
+    green_max=0
+    blue_max=0
+    red_max=0
+    green_center_x=0
+    green_center_y=0
+    blue_center_x=0
+    blue_center_y=0
+    red_center_x=0
+    red_center_y=0
+    blob_x=0
+    blob_y=0
+    blob_color=0
+    for blob in green_blobs:
+        if blob.area() > green_max:
+            green_max = blob.area()
+            green_center_x = blob.cx()-160
+            green_center_y = 120-blob.cy()
+            img.draw_rectangle(blob.rect(),color=(0,255,0))
+            img.draw_string(blob.cx(),blob.cy(),str(green_max),color=(0,255,0))
+    for blob in blue_blobs:
+        if blob.area() > blue_max:
+            blue_max = blob.area()
+            blue_center_x = blob.cx()-160
+            blue_center_y = 120-blob.cy()
+            img.draw_rectangle(blob.rect(),color=(0,0,255))
+            img.draw_string(blob.cx(),blob.cy(),str(blue_max),color=(0,0,255))
+    for blob in red_blobs:
+        if blob.area() > red_max:
+            red_max = blob.area()
+            red_center_x = blob.cx()-160
+            red_center_y = 120-blob.cy()
+            img.draw_rectangle(blob.rect(),color=(255,0,0))
+            img.draw_string(blob.cx(),blob.cy(),str(red_max),color=(255,0,0))
+    green_distance=abs(green_center_x)+abs(green_center_y)
+    blue_distance=abs(blue_center_x)+abs(blue_center_y)
+    red_distance=abs(red_center_x)+abs(red_center_y)
+    if red_max>3000 and red_distance<green_distance and red_distance<blue_distance:
+        blob_x=red_center_x
+        blob_y=red_center_y
+        blob_color=1
+    elif green_max>3000 and green_distance<blue_distance and green_distance<red_distance:
+        blob_x=green_center_x
+        blob_y=green_center_y
+        blob_color=2
+    elif blue_max>3000 and blue_distance<green_distance and blue_distance<red_distance:
+        blob_x=blue_center_x
+        blob_y=blue_center_y
+        blob_color=3
+    else:
+        blob_x=0
+        blob_y=0
+        blob_color=0
 
-mode=1
+# mode=2
 while(True):
-    if mode==0:
-        while(mode==0): #定位
-            img=sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
-            center_find_by_circle(img)
-            UartSendDate([send_center_x,send_center_y])
-            UartReceiveDate()
-    if mode==1:  #巡线
-        while(mode==1):
-            line_max_magnitude=0
-            img=sensor.snapshot()
-            #img.find_edges(image.EDGE_CANNY, threshold=(50, 80))
-            edge=None
-            lines=img.find_lines(roi=find_lines_roi,threshold=1000, theta_margin=15, rho_margin=10)
-            for line in lines:
-                if line.magnitude()>line_max_magnitude:
-                    line_max_magnitude=line.magnitude()
-                    # center_x=line.x()
-                    # center_y=line.y()
-                    edge=line.line()
-            if edge:
-                img.draw_line(edge,color=(255,0,0))
-            # UartSendDate([lines)
-            UartReceiveDate()
-    if mode==3: #颜色
-        while(mode==3):
-            img=sensor.snapshot()
-            green_blobs = img.find_blobs([green_threshold])
-            blue_blobs = img.find_blobs([blue_threshold])
-            red_blobs = img.find_blobs([red_threshold])
-            green_max=0
-            blue_max=0
-            red_max=0
-            green_center_x=0
-            green_center_y=0
-            blue_center_x=0
-            blue_center_y=0
-            red_center_x=0
-            red_center_y=0
-            for blob in green_blobs:
-                if blob.area() > green_max:
-                    green_max = blob.area()
-                    green_center_x = blob.cx()
-                    green_center_y = blob.cy()
-                    img.draw_rectangle(blob.rect(),color=(0,255,0))
-            for blob in blue_blobs:
-                if blob.area() > blue_max:
-                    blue_max = blob.area()
-                    blue_center_x = blob.cx()
-                    blue_center_y = blob.cy()
-                    img.draw_rectangle(blob.rect(),color=(0,0,255))
-            for blob in red_blobs:
-                if blob.area() > red_max:
-                    red_max = blob.area()
-                    red_center_x = blob.cx()
-                    red_center_y = blob.cy()
-                    img.draw_rectangle(blob.rect(),color=(255,0,0))
-            UartSendDate([green_center_x,green_center_y,blue_center_x,blue_center_y,red_center_x,red_center_y])
-            UartReceiveDate()
-            pyb.delay(100)
+    # if mode==0:
+    #     while(mode==0): #定位
+    img=sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
+    center_find_by_circle(img)
+    find_color(img)
+    UartSendDate([send_center_x-160,120-send_center_y,blob_x,blob_y,blob_color])
+    UartReceiveDate()
+#    if mode==1:  #巡线
+#        while(mode==1):
+#            line_max_magnitude=0
+#            img=sensor.snapshot()
+#            #img.find_edges(image.EDGE_CANNY, threshold=(50, 80))
+#            edge=None
+#            lines=img.find_lines(roi=find_lines_roi,threshold=1000, theta_margin=15, rho_margin=10)
+#            for line in lines:
+#                if line.magnitude()>line_max_magnitude:
+#                    line_max_magnitude=line.magnitude()
+#                    # center_x=line.x()
+#                    # center_y=line.y()
+#                    edge=line.line()
+#            if edge:
+#                img.draw_line(edge,color=(255,0,0))
+#            # UartSendDate([lines)
+#            UartReceiveDate()
+    # if mode==2: #颜色
+    #     while(mode==2):
+            
+    #         UartSendDate([green_center_x,green_center_y,blue_center_x,blue_center_y,red_center_x,red_center_y])
+    #         UartReceiveDate()
+    #         #pyb.delay(100)
