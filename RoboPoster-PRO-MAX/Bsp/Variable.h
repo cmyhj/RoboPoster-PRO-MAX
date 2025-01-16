@@ -92,11 +92,12 @@ extern int16_t t_plant;
 
 extern CAN_TxHeaderTypeDef CANx_tx_message;
 
-#define     Claw             Angle2=105;osDelay(500)
+#define     Claw            Angle2=105;osDelay(500)
 #define     Un_Claw         Angle2=140;osDelay(500)
-#define     Sink_plate         Angle1=-50;osDelay(500)
+#define     Sink_plate      Angle1=-50;osDelay(500)
 #define     Sink_firstplat  Angle1=-60;osDelay(500)
 #define     Sink_ground     Angle1=60;osDelay(500)
+#define     Sink_material   Angle1=-110;osDelay(500)
 #define     Un_Sink         Angle1=-160;osDelay(500)
 
 #define LIMIT_MIN_MAX(x,min,max) (x) = (((x)<=(min))?(min):(((x)>=(max))?(max):(x)))

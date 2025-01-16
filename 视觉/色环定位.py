@@ -231,7 +231,7 @@ def mode_change():
         circle_radius=90
         radius_the=5
     print(mode)
-mode=1
+mode=0
 while(True):
 
     # if mode==0:

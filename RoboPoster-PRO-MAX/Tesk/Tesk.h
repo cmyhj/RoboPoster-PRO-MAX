@@ -13,11 +13,12 @@ void Car_t(float x);
 void Car_get(void);
 void Car_put_first(void);
 void Car_put_second(void);
-void Car_put_stack_task(void);
-void Car_put_stack(int i);
-void Car_take_first(void);
+void Car_stack_material(int i);
+void Car_put_material(int i);
+void Car_stack_material_task(void);
 void choose_plate(int i);
-void Car_take_stack(void);
+void Car_take_first(void);
+void Car_take_stack();
 
 
 #endif
