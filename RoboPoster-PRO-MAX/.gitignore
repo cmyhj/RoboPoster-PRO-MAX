@@ -1,0 +1,123 @@
+# Keil Project and Workspace Files
+*.uvproj
+*.uvprojx
+*.uvopt
+*.uvoptx
+*.worksp
+*.workspace
+
+# Build output directories and files
+Build/
+Output/
+*.axf
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.sym
+*.d
+*.o
+*.obj
+*.lib
+*.sdf
+*.dep
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+._*
+
+# User specific files
+*.user
+*.suo
+*.settings
+*.vs
+
+# Debugging files
+*.debug
+*.pdb
+
+# Eclipse project files (if using eclipse for any part of the workflow)
+.project
+.cproject
+.settings/
+
+# STCubeMX generated files
+*_CM4.s
+*_CM7.s
+*.i HEX0
+*.i HEX1
+*.i HEX2
+*.i HEX3
+*.i HEX4
+*.i HEX5
+*.i HEX6
+*.i HEX7
+*.i IHEX
+*.i S19
+*.i ELF
+*.i LST
+*.i MAP
+*.i LIB
+*.i D
+*.i O
+*.i HEX
+*.i BIN
+
+# VSCode settings
+.vscode/
+
+# Other common ignores
+Thumbs.db
+Desktop.ini
+
+# Keil pack manager related files
+.packages
+
+# Keil MDK-ARM Pack Installer files
+*.install
+
+# Keil MDK Device Family Packs
+Packs/
+
+# Generated source files
+Generated_Source/
+
+# Log files
+*.log
+
+# Python virtual environments (if used in the project)
+venv/
+__pycache__/
+*.pyc
+
+# CMake build files
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+
+# NXP MCUXpresso IDE files
+.jlink_config
+NxprConfigurator/
+NxprSettings/
+NxprWorkspace/
+NxprProject/
+NxprDebugConfigurations/
+
+# IAR Embedded Workbench files
+*.ewp
+*.eww
+*.ewd
+*.plg
+*.cfg
+*.opt
+.eeprog
+.out
+.sim
+*.temporary_project
+
+# SEGGER J-Link configuration files
+JLinkSettings/
